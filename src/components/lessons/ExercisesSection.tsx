@@ -15,6 +15,7 @@ export default function ExercisesSection({ exercises, onComplete }: Props) {
   const [showSummary, setShowSummary] = useState(false);
 
   const exercise = exercises[current];
+
   const normalize = (s: string) => s.trim().toLowerCase().replace(/['']/g, "'").replace(/\s+/g, ' ');
 
   const handleSubmit = () => {
@@ -45,7 +46,7 @@ export default function ExercisesSection({ exercises, onComplete }: Props) {
           <h2 className="text-3xl font-bold text-wizard-blue">{score}/{exercises.length}</h2>
           <p className="text-gray-500">acertos — {pct}%</p>
         </div>
-        <div className={`text-lg font-bold ${pct >= 70 ? 'text-wizard-green' : 'text-red-500'}`}>
+        <div className={`text-lg font-bold ${pct >= 70 ? 'text-wizard-green' : 'text-wizard-red'}`}>
           {pct >= 90 ? 'Excelente!' : pct >= 70 ? 'Muito bom!' : 'Continue praticando!'}
         </div>
         <div className="flex gap-3 justify-center flex-wrap">
@@ -131,8 +132,7 @@ export default function ExercisesSection({ exercises, onComplete }: Props) {
           <div className={`rounded-xl p-4 flex items-start gap-3 ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
             {isCorrect
               ? <CheckCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
-              : <XCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
-            }
+              : <XCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />}
             <div>
               <p className={`font-bold text-sm ${isCorrect ? 'text-green-800' : 'text-red-800'}`}>
                 {isCorrect ? 'Correto! Excelente!' : `Resposta correta: "${exercise.correctAnswer}"`}
@@ -150,21 +150,18 @@ export default function ExercisesSection({ exercises, onComplete }: Props) {
           </button>
         ) : (
           <button onClick={handleNext} className="btn-primary flex items-center gap-2">
-            {current < exercises.length - 1 ? 'Próximo Exercício →' : 'Ver Resultado →'}
+            {current < exercises.length - 1 ? 'Próximo Exercício' : 'Ver Resultado'}
           </button>
         )}
       </div>
 
       <div className="flex gap-2">
         {exercises.map((_, i) => (
-          <div
-            key={i}
-            className={`h-2 rounded-full flex-1 ${
-              i < results.length
-                ? results[i] ? 'bg-wizard-green' : 'bg-red-400'
-                : i === current ? 'bg-wizard-blue' : 'bg-gray-200'
-            }`}
-          />
+          <div key={i} className={`h-2 rounded-full flex-1 ${
+            i < results.length
+              ? results[i] ? 'bg-wizard-green' : 'bg-wizard-red'
+              : i === current ? 'bg-wizard-blue' : 'bg-gray-200'
+          }`} />
         ))}
       </div>
     </div>
