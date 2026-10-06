@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Units from './pages/Units';
 import LessonPage from './pages/LessonPage';
 import Progress from './pages/Progress';
+import WizardLessonPage from './pages/WizardLessonPage';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/units" element={<Units />} />
               <Route path="/units/:unitId" element={<LessonPage />} />
+              <Route path="/lessons/:lessonId" element={<WizardLessonPage />} />
               <Route path="/progress" element={<Progress />} />
             </Routes>
           </main>
