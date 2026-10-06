@@ -41,12 +41,25 @@ As gravações ainda não foram transcritas.
 | We don't have any food. Let's go to the grocery store. | → pizza |
 | Do you have any salad? | → hamburger |
 
-## Como levar isso para o app
+## Como está no app
 
-Cada etapa vira um modo de exercício que se repete em todas as lições:
+A Lesson 43 está em `/lessons/lesson-43` (conteúdo em `src/data/lessons.ts`).
 
-- **Repita 3x:** o app fala a palavra (voz do navegador); o aluno repete e o reconhecimento de fala confere a pronúncia.
-- **Português → inglês:** aparece o português e o aluno responde em inglês, falando ou digitando.
-- **Troque e remonte:** mostra a frase base + uma dica ("→ waitress") e o aluno escreve ou fala a frase inteira nova.
-- **Avanço por domínio:** a etapa só libera a próxima depois de X acertos seguidos dentro de um tempo limite.
-- **Ordem fixa:** Verbs → New Words → Useful Phrases → Grammar → Real Life → Check it out → Fluency → Questions.
+| Etapa | Fases no app |
+|---|---|
+| Verbs | Apresentação do verbo (com o "fazer com as mãos") → drill trocando pronomes |
+| New Words | Ouvir e repetir 3x → 4ª vez português → inglês → 5ª vez em outra ordem → frases com o verbo |
+| Useful Phrases | Ler e entender → repetir EN / PT / EN → trocar e remontar |
+| Grammar | Ler (explicação some/any) → 3x EN + 1x PT → pequenas trocas |
+| Real Life | EN + PT em todas as frases → trocas anotadas em aula (popcorn → cake, city → block…) |
+| Check it out! | Combinações (to make + …, menu, pizza place) → usar em frases |
+| Fluency | 3 sequências: frase modelo + dica; cada resposta vira a base da próxima |
+| Questions | Responder com frase completa → criar 10 variações |
+
+Regras do método no app:
+- **Correção:** resposta errada mostra e fala só a forma certa, e a frase volta para o fim da fila até sair certa.
+- **Avanço:** uma etapa libera a próxima só depois de concluída; respostas em menos de 7 s ganham "⚡ Rápido!".
+- **Voz:** botão de microfone (Chrome/Edge/Safari) para responder falando; o botão "Ouvir" usa a voz do navegador.
+- **Respostas aceitas:** ignora maiúsculas, pontuação e contrações ("don't" = "do not").
+
+Para criar outra lição, adicione um objeto em `src/data/lessons.ts` seguindo o tipo `WizardLesson` (`src/types/wizard.ts`).

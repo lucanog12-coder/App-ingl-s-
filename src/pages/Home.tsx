@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import { BookOpen, Brain, MessageCircle, Mic, TrendingUp, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { units } from '../data/units';
+import { lessons } from '../data/lessons';
 
 export default function Home() {
   const { progress, totalScore } = useApp();
-  const completedUnits = progress.filter(p => p.completedSections.length >= 4).length;
+  const completedUnits = progress.filter(p => units.some(u => u.id === p.unitId) && p.completedSections.length >= 4).length;
 
   const features = [
     { icon: BookOpen, title: 'Vocabulário', desc: 'Aprenda palavras com fonética e exemplos', color: 'bg-blue-100 text-blue-700' },
@@ -24,15 +25,31 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      {lessons.map(lesson => (
+        <Link
+          key={lesson.id}
+          to={`/lessons/${lesson.id}`}
+          className="card flex items-center gap-4 border-2 border-wizard-gold/50 hover:shadow-lg transition-shadow"
+        >
+          <div className="w-14 h-14 bg-wizard-gold text-white rounded-2xl flex items-center justify-center text-xl font-bold flex-shrink-0">{lesson.number}</div>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-bold uppercase tracking-wide text-wizard-gold">Novo · Roteiro da aula Wizard</div>
+            <div className="font-bold text-gray-800">Lesson {lesson.number}: {lesson.title}</div>
+            <div className="text-sm text-gray-500">Verbs → New Words → Useful Phrases → Grammar → Real Life → Check it out → Fluency → Questions</div>
+          </div>
+          <span className="text-wizard-blue font-bold">→</span>
+        </Link>
+      ))}
+
+      <div className="grid grid-cols-3 gap-2 sm:gap-4">
         {[
           { label: 'Unidades', value: `${completedUnits}/${units.length}`, icon: BookOpen },
           { label: 'Pontos', value: totalScore, icon: Star },
           { label: 'Nível', value: completedUnits < 2 ? 'Iniciante' : 'Básico', icon: TrendingUp },
         ].map(({ label, value, icon: Icon }) => (
-          <div key={label} className="card text-center">
+          <div key={label} className="card min-w-0 px-2 py-4 text-center sm:p-6">
             <Icon size={24} className="mx-auto text-wizard-blue mb-2" />
-            <div className="text-2xl font-bold text-wizard-blue">{value}</div>
+            <div className="text-lg font-bold text-wizard-blue break-words sm:text-2xl">{value}</div>
             <div className="text-sm text-gray-500">{label}</div>
           </div>
         ))}
@@ -40,7 +57,7 @@ export default function Home() {
 
       <div>
         <h2 className="text-2xl font-bold mb-4 text-wizard-blue">O Método Wizard</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           {features.map(({ icon: Icon, title, desc, color }) => (
             <div key={title} className="card flex items-start gap-4">
               <div className={`p-3 rounded-xl ${color}`}>
